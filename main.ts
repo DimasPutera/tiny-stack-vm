@@ -36,6 +36,7 @@ function run(p:Buffer,inp:Buffer):[Buffer,number]{
    if(op===16)r=(v+b)|0;
    else if(op===17)r=(v-b)|0;
    else if(op===18)r=Math.imul(v,b);
+   // Jebakan ISA: -2147483648 / -1 = -2147483648, x % -1 = 0, DIVU/MODU baca operan sebagai unsigned.
    else if(op===19){if(b===0)return[Buffer.from(o),4];r=v===-2147483648&&b===-1?-2147483648:Math.trunc(v/b)|0}
    else if(op===20){if(b===0)return[Buffer.from(o),4];r=(v%b)|0}
    else if(op===21){if(b===0)return[Buffer.from(o),4];r=Math.trunc((v>>>0)/(b>>>0))|0}
